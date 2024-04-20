@@ -11,8 +11,15 @@ pipeline {
                 url: 'https://github.com/alpaaprthishasank/flask-doc.git'
                 }
         }
+        stage('Login') {
+				steps {
+					sh 'echo dimple2009 | docker login -u shasank2002 --password-stdin'
+						}
+
+					}
         stage('Build') {
             steps {
+
                 script {
                     dockerImage = docker.build "${IMAGE}:latest"
                 }
