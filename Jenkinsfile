@@ -1,22 +1,17 @@
 pipeline { 
     environment {
         IMAGE = "shasank2002/pyt"
+        registryCredential = 'dockerhub'
         dockerImage = ''
     }
     agent any 
     stages {
         stage('checkout') {
                 steps {
-                git branch: 'master',
-                url: 'https://github.com/alpaaprthishasank/flask-doc.git'
+                git branch: 'main',
+                url: 'https://github.com/alpaaprthishasank/flask'
                 }
         }
-        stage('Login') {
-				steps {
-				sh 'echo dimple2009 | docker login -u shasank2002 --password-stdin'
-				}
-
-		}
         stage('Build') {
             steps {
                 script {
@@ -28,10 +23,12 @@ pipeline {
         stage('Push image to docker hub') {
             steps {
                     script {
+                     docker.withRegistry( '', registryCredential ) { 
                         dockerImage.push() 
                      }
                 }
             }
+        }
 
         stage('run the docker container') {
             steps {
@@ -39,5 +36,5 @@ pipeline {
             }
         
         } 
-    }   
+    }
 }
