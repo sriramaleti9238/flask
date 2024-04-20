@@ -13,13 +13,12 @@ pipeline {
         }
         stage('Login') {
 				steps {
-					sh 'echo dimple2009 | docker login -u shasank2002 --password-stdin'
-						}
+				sh 'echo dimple2009 | docker login -u shasank2002 --password-stdin'
+				}
 
-					}
+		}
         stage('Build') {
             steps {
-
                 script {
                     dockerImage = docker.build "${IMAGE}:latest"
                 }
@@ -33,7 +32,6 @@ pipeline {
                      }
                 }
             }
-        }
 
         stage('run the docker container') {
             steps {
@@ -41,5 +39,5 @@ pipeline {
             }
         
         } 
-    }
+    }   
 }
