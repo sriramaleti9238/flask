@@ -1,16 +1,16 @@
-pipeline { 
+pipeline {
     environment {
         IMAGE = "shasank2002/pyt"
-        registryCredential = 'dockerhub'
+        registryCredential = 'dockerhub' // This should match the ID of the Docker Hub credentials in Jenkins
         dockerImage = ''
     }
     agent any 
     stages {
         stage('checkout') {
-                steps {
+            steps {
                 git branch: 'master',
                 url: 'https://github.com/alpaaprthishasank/flask'
-                }
+            }
         }
         stage('Build') {
             steps {
@@ -22,10 +22,10 @@ pipeline {
 
         stage('Push image to docker hub') {
             steps {
-                    script {
-                     docker.withRegistry( '', registryCredential ) { 
-                        dockerImage.push() 
-                     }
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
+                        dockerImage.push()
+                    }
                 }
             }
         }
@@ -34,7 +34,6 @@ pipeline {
             steps {
                 sh 'docker run -d -p 80:80 --name demo-app ${IMAGE}:latest'
             }
-        
         } 
     }
 }
