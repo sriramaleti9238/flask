@@ -12,14 +12,6 @@ pipeline {
                 url: 'https://github.com/sriramaleti9238/flask'
             }
         }
-        stage('Initialize') {
-            steps {
-                script {
-                    def dockerHome = tool 'myDocker'
-                    env.PATH = "${dockerHome}/bin:${env.PATH}"
-                }
-            }
-        }
 
         stage('Build') {
             steps {
@@ -38,17 +30,19 @@ pipeline {
                 }
             }
         }
-        stage('Test Docker') {
-            steps {
-                script {
-                    sh 'docker --version'
-                }
-            }
-        }
+        // stage('Test Docker') {
+        //     steps {
+        //         script {
+        //             sh 'docker --version'
+        //         }
+        //     }
+        // }
 
         stage('run the docker container') {
             steps {
-                sh 'docker run -d -p 3000:8083 --name demo-app ${dockerImage}:latest'
+                script {
+                    sh 'docker run -d -p 3000:8083 --name demo-app ${dockerImage}:latest'
+                }
             }
         } 
     }
