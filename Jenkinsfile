@@ -9,7 +9,7 @@ pipeline {
         stage('checkout') {
             steps {
                 git branch: 'master',
-                url: 'https://github.com/sriramaleti9238/flask.git'
+                url: 'https://github.com/sriramaleti9238/flask'
             }
         }
         stage('Build') {
