@@ -1,6 +1,6 @@
 pipeline {
     environment {
-        IMAGE = "shasank2002/pyt"
+        IMAGE = "shasank2002/pyth"
         registryCredential = 'dockerhub' // This should match the ID of the Docker Hub credentials in Jenkins
         dockerImage = ''
     }
@@ -32,7 +32,7 @@ pipeline {
 
         stage('run the docker container') {
             steps {
-                sh 'docker run -d -p 3000:8082 --name demo-app ${IMAGE}:latest'
+                sh 'docker run -d -p 3000:8082 --name demo-app ${dockerImage}:latest'
             }
         } 
     }
