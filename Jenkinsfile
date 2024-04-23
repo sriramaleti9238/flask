@@ -20,6 +20,13 @@ pipeline {
                 }
             }
         }
+        stage('Test Docker') {
+            steps {
+                script {
+                    sh 'docker --version'
+                }
+            }
+        }
 
         stage('Push image to docker hub') {
             steps {
