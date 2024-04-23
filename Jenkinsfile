@@ -1,5 +1,6 @@
 pipeline {
     environment {
+        dockerHome = tool name: 'myDocker', type: 'hudson.plugins.docker.tools.DockerTool'
         IMAGE = "sriramaleti9238/pyth"
         registryCredential = 'dockerhub' // This should match the ID of the Docker Hub credentials in Jenkins
         dockerImage = ''
@@ -10,6 +11,14 @@ pipeline {
             steps {
                 git branch: 'master',
                 url: 'https://github.com/sriramaleti9238/flask'
+            }
+        }
+        stage('Initialize') {
+            steps {
+                script {
+                    // Set the PATH environment variable to include Docker
+                    env.PATH = "${dockerHome}/bin:${env.PATH}"
+                }
             }
         }
         stage('Build') {
@@ -28,10 +37,6 @@ pipeline {
                     }
                 }
             }
-        }
-        stage('Initialize'){
-            def dockerHome = tool 'myDocker'
-            env.PATH = "${dockerHome}/bin:${env.PATH}"
         }
         stage('Test Docker') {
             steps {
